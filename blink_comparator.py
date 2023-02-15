@@ -34,7 +34,7 @@ def register_image(img1, img2, kp1, kp2, best_matches):
             dst_pts[i, :] = kp2[match.trainIdx].pt
         h_array, mask = cv.findHomography(src_pts, dst_pts, cv.RANSAC)
         height, width = img2.shape
-        img1_wraped = cv.wrapPerspective(img1, h_array, (width, height))
+        img1_wraped = cv.warpPerspective(img1, h_array, (width, height))
         return img1_wraped
     else:
         print(f"WARNING: Number of key points less than {MIN_NUM_KEYPOINT_MATCHES}\n")  # TODO eglish
@@ -80,7 +80,7 @@ def main():
         blink(img1, img1_registered, "verification of registration", num_loops=5)
         out_filename = f"{night1_files[i][:-4]}_registered.png"
 
-        cv.imwrtie(str(path3 / out_filename), img1_registered)
+        cv.imwrite(str(path3 / out_filename), img1_registered)
         cv.destroyAllWindows()
         blink(img1_registered, img2, "Blink Comparator", num_loops=15)
 
